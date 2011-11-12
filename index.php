@@ -34,21 +34,22 @@
 		echo "</div>";
 
 echo "<div>";
-
-
+$count=0;
+$array=array();
 	
 	/* load in a directory and read in the list of files contained in it */
 	if ($handle = opendir("/var/www/$dir")) {
 	    echo "Songs: <br />";
 	  /*  echo "DIR IS AS FOLLOWS: $dir <br />"; */
+	    
 	    while (false !== ($file = readdir($handle))) {
 		$pathfromroot = "$dir/$file"; /* Create a varible that will hold the entire path from / */
-		$linkarray=array();
-		$count=0;
+	
+		
 		if (preg_match("/mp3$/", "$file")){
 			/* This block is used for handling links that end in .mp3 */
 			echo "<a href='http://localhost/?dir=$dir&play=$pathfromroot'>$file</a><br />";
-			$linkarray[$count]="http://localhost/?dir=$dir&play=$pathfromroot";
+			$array[$count] = "http://localhost/?dir=$dir&play=$pathfromroot";
 			$count=$count+1;
 		}
 		else
@@ -60,15 +61,14 @@ echo "<div>";
 
     		closedir($handle);
 	}
-	/* Worlds worst implemented way to handle a script to select a random link.. Seriously this will be updated */
-	shuffle($linkarray);
-
+	/* Motherfucking cocksucking christ, I spent like 30 minutes learning that one should not code after 2 am. While loops how do they work??!?!?!?! */
+	shuffle($array);
 	/* <!-- This script is used to pull the status of the ending of a song. --> */
 	?>
 		<script>
 			var audio = document.getElementsByTagName('audio')[0];
 			audio.addEventListener('ended', function () {
-			window.location="<?php echo"$linkarray[0]"; ?>"
+			window.location='<?php echo"$array[0]"; ?>'
 			} );
 		</script>
 	</div>
