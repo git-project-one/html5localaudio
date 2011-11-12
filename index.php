@@ -29,6 +29,8 @@
 		$dir=(urldecode($dir));
 		$play=($_GET['play']);
 		$play=(urldecode($play));
+
+		/* This is used to create the $parrent variable which is the current directory minus the last subdirectory */
 		$explode=array();
 		$explode = explode("/",$dir);
 		$total = count($explode);
