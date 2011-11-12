@@ -50,7 +50,7 @@ $array=array();
 	
 	/* load in a directory and read in the list of files contained in it */
 	if ($handle = opendir("/var/www/$dir")) {
-	    echo "<a href='http://localhost/'>Go Home</a> || <a href='http://localhost/?dir=$parent'>Go Up a level</a><br /><br />";
+	    echo "<a href='/'>Go Home</a> || <a href='/?dir=$parent'>Go Up a level</a><br /><br />";
 	    echo "<b>Songs:</b> <br />";
 	  /*  echo "DIR IS AS FOLLOWS: $dir <br />"; */
 	    
@@ -60,15 +60,15 @@ $array=array();
 		
 		if (preg_match("/mp3$/", "$file")){
 			/* This block is used for handling links that end in .mp3 */
-			echo "<a href='http://localhost/?dir=$dir&play=$pathfromroot'>$file</a><br />";
-			$array[$count] = "http://localhost/?dir=$dir&play=$pathfromroot";
+			echo "<a href='/?dir=$dir&play=$pathfromroot'>$file</a><br />";
+			$array[$count] = "/?dir=$dir&play=$pathfromroot";
 			$count=$count+1;
 		}
 		else
 			{
 				/* This block is used for non mp3 files which it presumes are folders. Error checking needs to be implmented. */
         			if ($file != '.' && $file != '..'){
-					echo "<a href='http://localhost/?dir=$pathfromroot'>$file</a> <br />";
+					echo "<a href='/?dir=$pathfromroot'>$file</a> <br />";
 				}
 			}
 		}
