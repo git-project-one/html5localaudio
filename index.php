@@ -61,7 +61,7 @@ $array=array();
 
     		closedir($handle);
 	}
-	/* Motherfucking cocksucking christ, I spent like 30 minutes learning that one should not code after 2 am. While loops how do they work??!?!?!?! */
+	/* Motherfucking cocksucking christ, I spent like 30 minutes learning that one should not code after 2 am. 'While' loops how do they work??!?!?!?! */
 	shuffle($array);
 	/* <!-- This script is used to pull the status of the ending of a song. --> */
 	?>
