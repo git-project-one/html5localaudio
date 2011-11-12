@@ -29,11 +29,12 @@
 		$dir=(urldecode($dir));
 		$play=($_GET['play']);
 		$play=(urldecode($play));
+?>
+		<audio style='display:none' id='player' src='<?php echo"$play";?>' type='audio/mp3' controls='controls' autoplay='autoplay'></audio>
+		</div>
 
-		echo "<audio style='display:none' id='player' src='$play' type='audio/mp3' controls='controls' autoplay='autoplay'></audio>";	
-		echo "</div>";
-
-echo "<div>";
+<div>
+<?php
 $count=0;
 $array=array();
 	
