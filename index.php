@@ -29,6 +29,14 @@
 		$dir=(urldecode($dir));
 		$play=($_GET['play']);
 		$play=(urldecode($play));
+		$explode=array();
+		$explode = explode("/",$dir);
+		$total = count($explode);
+		$total=$total-1;
+		unset($explode[$total]);
+		foreach($explode as &$i) {
+			$parent .= "/$i";
+		}
 ?>
 		<audio style='display:none' id='player' src='<?php echo"$play";?>' type='audio/mp3' controls='controls' autoplay='autoplay'></audio>
 		</div>
@@ -40,7 +48,8 @@ $array=array();
 	
 	/* load in a directory and read in the list of files contained in it */
 	if ($handle = opendir("/var/www/$dir")) {
-	    echo "Songs: <br />";
+	    echo "<a href='http://localhost/'>Go Home</a> || <a href='http://localhost/?dir=$parent'>Go Up a level</a><br /><br />";
+	    echo "<b>Songs:</b> <br />";
 	  /*  echo "DIR IS AS FOLLOWS: $dir <br />"; */
 	    
 	    while (false !== ($file = readdir($handle))) {
@@ -56,7 +65,9 @@ $array=array();
 		else
 			{
 				/* This block is used for non mp3 files which it presumes are folders. Error checking needs to be implmented. */
-        			echo "<a href='http://localhost/?dir=$pathfromroot'>$file</a> <br />";
+        			if ($file != '.' && $file != '..'){
+					echo "<a href='http://localhost/?dir=$pathfromroot'>$file</a> <br />";
+				}
 			}
 		}
 
