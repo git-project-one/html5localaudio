@@ -1,5 +1,5 @@
 html{
-font-size:0.7em
+font-size:0.8em
 }
 
 body{
@@ -10,7 +10,36 @@ background-color:#ccc;
 .progressBar{
 width:272px;
 margin:auto;
-margin-top:5px;
+height: 20px;
+
+}
+
+#titleSpan{
+float:left;
+top:1px;
+position:relative;
+}
+.meta{
+height:20px;
+width:100%;
+margin-left:5px;
+}
+ul{
+list-style:none;
+margin:0;
+padding:0;
+}
+
+ul li{
+cursor:pointer;
+color:#444;
+font-size:1em;
+line-height:2em;
+position:relative;
+}
+ul li:hover{
+left:5px;
+
 }
 
 #bar{
@@ -24,9 +53,9 @@ width: 200px;
 }
 
 #controls{
-height:25px;
+height:30px;
 width:60px;
-margin:auto;
+float:right;
 }
 
 #handle{
