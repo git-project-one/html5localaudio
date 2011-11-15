@@ -1,6 +1,12 @@
 <?php
 ini_set('memory_limit', '-1');
 
+//$path_to_lame = 'C:\lame\lame.exe';
+$path_to_lame = '/Applications/lame';
+//$path_to_folder = 'C:\\xammpfiles\\htdocs\\html5localaudio\\mp3\\';
+$path_to_folder = '/Applications/XAMPP/htdocs/html5localaudio/mp3/';
+
+
     /**
     
           
@@ -254,19 +260,27 @@ ini_set('memory_limit', '-1');
 		echo "art/{$tmpname}.png";
 		else
 	{	
-		exec("C:\LAME\lame.exe ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." -f -m m -b 16 --resample 32 ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." && C:\LAME\lame.exe --decode ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." {$tmpname}.wav");
+	  //	exec("C:\LAME\lame.exe ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." -f -m m -b 16 --resample 32 ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." && C:\LAME\lame.exe --decode ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." {$tmpname}.wav");
+
+	  //exec("$path_to_lame '".dirname(__FILE__)."/".$_POST["dirname"]."/".$_POST["mp3"]."' -f -m m -b 16 --resample 32 '".dirname(__FILE__)."/".$_POST["dirname"]."/low_".$_POST["mp3"]."' && /Applications/lame --decode '".dirname(__FILE__)."/".$_POST["dirname"]."/low_".$_POST["mp3"]."' '".dirname(__FILE__)."/".$_POST["dirname"]."/{$tmpname}.wav'");
+
+
+exec($path_to_lame." '".$path_to_folder.$_POST["mp3"]."' -f -m m -b 16 --resample 32 '".$path_to_folder."low_".$_POST["mp3"]."' && $path_to_lame --decode '".$path_to_folder."low_".$_POST["mp3"]."' '".$path_to_folder."{$tmpname}.wav'");
+
+
 
 	  
 	  // delete temporary files
 	  
       @unlink("{$tmpname}_o.mp3");
-      @unlink($_POST["dirname"]."/low_".$_POST["mp3"]);
-      
-      $filename = "{$tmpname}.wav";
-	  //$filename = "resampled.wav";
-      
+      @unlink($path_to_folder."low_".$_POST["mp3"]);
+      //works in windows
+      //$filename = "{$tmpname}.wav";
+	
+
+      $filename =$path_to_folder."{$tmpname}.wav";
+
       if (!file_exists($filename)) {
-	  //echo dirname(__FILE__)."\\".$_POST["dirname"]."\\temp\\".$_POST["mp3"];
 	    print "Error: WAV file not generated. Please verify directory write and execute permissions.";
         exit;
       }
@@ -337,7 +351,7 @@ ini_set('memory_limit', '-1');
       
       // close and cleanup
       fclose ($handle);
-      unlink("{$tmpname}.wav");
+      unlink($path_to_folder."{$tmpname}.wav");
 	  
 
       
@@ -397,6 +411,8 @@ ini_set('memory_limit', '-1');
         imagepng($rimg,"art/{$tmpname}.png");
 		imagedestroy($rimg);
 		echo "art/{$tmpname}.png";
+		return "art/{$tmpname}.png";
+
       
       } else {
       

@@ -23,7 +23,9 @@
 	
 	/* load in a directory and read in the list of files contained in it */
 	//if ($handle = opendir("/var/www/$dir")) {
-	if ($handle = opendir("$dir")) {
+//	if ($handle = opendir("/Users/anzor/mp3")) {
+	if ($handle = opendir("mp3")) {
+
 
 	   // echo "<a href='/'>Go Home</a> || <a href='/?dir=$parent'>Go Up a level</a><br /><br />";
 	  //  echo "<b>Songs:</b> <br />";
@@ -59,9 +61,9 @@
 			else
 				{
 					/* This block is used for non mp3 files which it presumes are folders. Error checking needs to be implmented. */
-						if ($file != '.' && $file != '..'){
-						echo "<a href='/?dir=$pathfromroot'>$file</a> <br />";
-					}
+				  //		if ($file != '.' && $file != '..'){
+				  //		echo "<a href='/?dir=$pathfromroot'>$file</a> <br />";
+				  //	}
 				}
 		}
 		echo '{"dir": "0" , "filename": "0", "artist": "0", "album": "0","title": "0"}]';
