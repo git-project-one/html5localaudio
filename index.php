@@ -50,7 +50,7 @@
 			$parent .= "/$i";
 		}
 ?>
-		<audio style='display:none' id='player' src='<?php echo"$play";?>' type='audio/mp3' controls='controls' autoplay='autoplay'></audio>
+		<audio style='display:none' id='player' src='<?php echo"$play";?>' type='audio/mp3' controls='controls'></audio>
 		</div>
 
 <div>

@@ -72,7 +72,7 @@ window.addEventListener("load",function(){
 	var dir = obj.getAttribute("data-dir");
 	var filename = obj.getAttribute("data-filename");
 	
-	//post(filename,dir);
+	post(filename,dir);
 	
 	if(artist == '' || title == '')
 		titleSpan.innerText = url;
@@ -81,7 +81,7 @@ window.addEventListener("load",function(){
 	
 	setSource(url);
 	playBtn.style.backgroundImage = "url(/player/img/pause.png)";
-	player.play();
+	//player.play();
 	}
 
 	
