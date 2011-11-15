@@ -1,10 +1,15 @@
 <?php
 ini_set('memory_limit', '-1');
 
-//$path_to_lame = 'C:\lame\lame.exe';
-$path_to_lame = '/Applications/lame';
-//$path_to_folder = 'C:\\xammpfiles\\htdocs\\html5localaudio\\mp3\\';
-$path_to_folder = '/Applications/XAMPP/htdocs/html5localaudio/mp3/';
+/* Windows */
+$path_to_lame = 'C:\LAME\lame.exe';
+$path_to_folder = dirname(__FILE__)."\\mp3\\";
+
+/* Unix */
+//$path_to_lame = '/Applications/lame';
+//$path_to_folder = dirname(__FILE__)."/mp3/";
+
+
 
 
     /**
@@ -251,25 +256,13 @@ $path_to_folder = '/Applications/XAMPP/htdocs/html5localaudio/mp3/';
        * We don't necessarily need high quality audio to produce a waveform, doing this process reduces the WAV
        * to it's simplest form and makes processing significantly faster
        */
-//      exec("C:\LAME\lame.exe {$tmpname}_o.mp3 -f -m m -b 16 --resample 8 {$tmpname}.mp3 && C:\LAME\lame.exe --decode {$tmpname}.mp3 {$tmpname}.wav");
-		
-		//low quality windows
-		//exec("C:\LAME\lame.exe ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." -f -m m -b 16 --resample 8 ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." && C:\LAME\lame.exe --decode ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." {$tmpname}.wav");
-	
+		//if artwork already exists/return it
 	if (file_exists("art/{$tmpname}.png"))
 		echo "art/{$tmpname}.png";
 		else
 	{	
-	  //	exec("C:\LAME\lame.exe ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." -f -m m -b 16 --resample 32 ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." && C:\LAME\lame.exe --decode ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." {$tmpname}.wav");
-
-	  //exec("$path_to_lame '".dirname(__FILE__)."/".$_POST["dirname"]."/".$_POST["mp3"]."' -f -m m -b 16 --resample 32 '".dirname(__FILE__)."/".$_POST["dirname"]."/low_".$_POST["mp3"]."' && /Applications/lame --decode '".dirname(__FILE__)."/".$_POST["dirname"]."/low_".$_POST["mp3"]."' '".dirname(__FILE__)."/".$_POST["dirname"]."/{$tmpname}.wav'");
-
-
-exec($path_to_lame." '".$path_to_folder.$_POST["mp3"]."' -f -m m -b 16 --resample 32 '".$path_to_folder."low_".$_POST["mp3"]."' && $path_to_lame --decode '".$path_to_folder."low_".$_POST["mp3"]."' '".$path_to_folder."{$tmpname}.wav'");
-
-
-
-	  
+		//down-convert to wav for analysis(Should be platform independent as long as the path is correct above
+		exec($path_to_lame." ".escapeshellarg($path_to_folder.$_POST["mp3"])." -f -m m -b 16 --resample 32 ".escapeshellarg($path_to_folder."low_".$_POST["mp3"])." && $path_to_lame --decode ".escapeshellarg($path_to_folder."low_".$_POST["mp3"])." ".escapeshellarg($path_to_folder."{$tmpname}.wav"));
 	  // delete temporary files
 	  
       @unlink("{$tmpname}_o.mp3");
