@@ -230,6 +230,9 @@ ini_set('memory_limit', '-1');
     
       // temporary file name
       $tmpname = substr(md5($_POST["mp3"]), 0, 10);
+
+
+
       
       // copy from temp upload directory to current
 	  
@@ -246,16 +249,24 @@ ini_set('memory_limit', '-1');
 		
 		//low quality windows
 		//exec("C:\LAME\lame.exe ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." -f -m m -b 16 --resample 8 ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." && C:\LAME\lame.exe --decode ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." {$tmpname}.wav");
-				
-		exec("C:\LAME\lame.exe ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." -f -m m -b 16 --resample 32 ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." && C:\LAME\lame.exe --decode ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." {$tmpname}.wav");
-      // delete temporary files
+	
+	if (file_exists("art/{$tmpname}.png"))
+		echo "art/{$tmpname}.png";
+		else
+	{	
+		exec("C:\LAME\lame.exe ".dirname(__FILE__)."\\".$_POST["dirname"]."\\".$_POST["mp3"]." -f -m m -b 16 --resample 32 ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." && C:\LAME\lame.exe --decode ".dirname(__FILE__)."\\".$_POST["dirname"]."\\low_".$_POST["mp3"]." {$tmpname}.wav");
+
+	  
+	  // delete temporary files
+	  
       @unlink("{$tmpname}_o.mp3");
-      @unlink("{$tmpname}.mp3");
+      @unlink($_POST["dirname"]."/low_".$_POST["mp3"]);
       
       $filename = "{$tmpname}.wav";
 	  //$filename = "resampled.wav";
       
       if (!file_exists($filename)) {
+	  //echo dirname(__FILE__)."\\".$_POST["dirname"]."\\temp\\".$_POST["mp3"];
 	    print "Error: WAV file not generated. Please verify directory write and execute permissions.";
         exit;
       }
@@ -327,6 +338,8 @@ ini_set('memory_limit', '-1');
       // close and cleanup
       fclose ($handle);
       unlink("{$tmpname}.wav");
+	  
+
       
       /**
        * Image generation
@@ -392,32 +405,5 @@ ini_set('memory_limit', '-1');
         imagedestroy($img);
       
       }
-      
-    } else {
-    
-?>
-
-  <form method="post" action="<?php print $_SERVER["REQUEST_URI"]; ?>" enctype="multipart/form-data">
-  
-  <p>MP3 File:<br />
-    <input type="file" name="mp3" /></p>
-    
-  <p>Image Width:<br />
-    <input type="text" name="width" value="500" /></p>
-    
-  <p>Image Height:<br />
-    <input type="text" name="height" value="100" /></p>
-    
-  <p>Foreground Color: <small>(HEX/HTML color code)</small><br />
-    <input type="text" name="foreground" value="#FF0000" /></p>
-    
-  <p>Background Color: (Leave blank for transparent background) <small>(HEX/HTML color code)</small><br />
-    <input type="text" name="background" value="#FFFFFF" /></p>
-    
-  <p><input type="submit" value="Generate Waveform" /></p>
-  
-  </form>
-
-<?php
-    
-    }    
+      }}
+    ?>

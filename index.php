@@ -5,7 +5,6 @@
 		<link href="css/style.css" rel="stylesheet"/>
 	</head>
 	<body>
-	
 		<div id="playerdiv">
 			<div class="meta">
 				<div id="controls" style="float:left">
@@ -19,12 +18,13 @@
 					<span id ="currentTime" style="float:left">00:00</span><div id="bar"><div id="handle"></div></div><span id ="totalTime">00:00</span>
 				</div>
 			</div>
-			<div id="display">
+						<div id="display">
 				<div class="container window">
 						<div style="border-right:1px solid rgba(173, 58, 211, 0.4)"></div>
 						<div></div>
 				</div>		
 			</div>
+			
 			
 			
 			

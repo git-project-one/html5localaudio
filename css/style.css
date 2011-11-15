@@ -28,6 +28,7 @@ ul{
 list-style:none;
 margin:0;
 padding:0;
+
 }
 
 ul li{
@@ -36,10 +37,16 @@ color:#444;
 font-size:1em;
 line-height:2em;
 position:relative;
+-webkit-transition: all 100ms linear;
+-moz-transition: all 100ms linear;
 }
 ul li:hover{
 left:5px;
+}
 
+ul li.loading{
+color:#888;
+background-color:#aaa;
 }
 
 #bar{
@@ -92,7 +99,6 @@ background-image:url("../img/next.png");
 
 
 #playerdiv{
-padding-top:100px;
 width:996px;
 height:500px;
 margin:auto;
