@@ -32,6 +32,7 @@
 			
 			<div id="playlist">
 			<!-- The actual music player business. -->
+			
 		<audio style='display:none' id='player' src='<?php echo"$play";?>' type='audio/mp3' controls='controls'></audio>
 		</div>
 
