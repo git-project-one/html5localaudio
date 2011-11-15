@@ -5,6 +5,7 @@
 		<link href="css/style.css" rel="stylesheet"/>
 	</head>
 	<body>
+	
 		<div id="playerdiv">
 			<div class="meta">
 				<div id="controls" style="float:left">
