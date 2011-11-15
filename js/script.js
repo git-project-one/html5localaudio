@@ -29,18 +29,10 @@ window.addEventListener("load",function(){
 	function post(mp3,dir){
 		var url = "convert.php";
 		var params = "mp3=" + mp3 + "&dirname=mp3&width=30000&height=110&foreground=#AAAAAA&background=";
-
 		http.open("POST", url, true);
-
-		//Send the proper header information along with the request
 		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		//multipart/form-data
-	//	http.setRequestHeader("Content-length", params.length);
-	//	http.setRequestHeader("Connection", "close");
 		http.onreadystatechange = function() {//Call a function when the state changes.
 			if(http.readyState == 4 && http.status == 200) {
-				
-				//console.log(http.responseText);
 				display.style.backgroundImage = "url("+http.responseText+")";
 				player.play();
 			}
@@ -82,31 +74,35 @@ window.addEventListener("load",function(){
 		
 			if(http.readyState == 4 && http.status == 200) {
 			var tracks = JSON.parse(http.responseText,reviver);	
-			//console.log(tracks.sort(sort_by('artist', false, function(a){return a.toUpperCase()})));
-			
-			for (var i in tracks.sort(sort_by('artist', false, function(a){return a.toUpperCase()}))){
-			var list_item = document.createElement("li");
-		
-			var dir = document.createAttribute("data-dir");
-			dir.nodeValue = tracks[i].dir;
-			list_item.setAttributeNode(dir);
-			var filename = document.createAttribute("data-filename");
-			filename.nodeValue = tracks[i].filename;
-			list_item.setAttributeNode(filename);
-			var id = document.createAttribute("data-id");
-			id.nodeValue = count;
-			list_item.setAttributeNode(id);
-			var artist = document.createAttribute("data-artist");
-			artist.nodeValue = tracks[i].artist;
-			list_item.setAttributeNode(artist);
-			var title = document.createAttribute("data-title");
-			title.nodeValue = tracks[i].title;
-			list_item.setAttributeNode(title);
-		
 
-			list_item.appendChild(document.createTextNode(tracks[i].artist + " - " + tracks[i].title));
-			list.appendChild(list_item);
-			count++;
+			//Create list element from JSON object
+			for (var i in tracks.sort(sort_by('artist', false, function(a){return a.toUpperCase()}))){
+			if(tracks[i].artist == 0)
+			{}
+			else{
+				var list_item = document.createElement("li");
+			
+				var dir = document.createAttribute("data-dir");
+				dir.nodeValue = tracks[i].dir;
+				list_item.setAttributeNode(dir);
+				var filename = document.createAttribute("data-filename");
+				filename.nodeValue = tracks[i].filename;
+				list_item.setAttributeNode(filename);
+				var id = document.createAttribute("data-id");
+				id.nodeValue = count;
+				list_item.setAttributeNode(id);
+				var artist = document.createAttribute("data-artist");
+				artist.nodeValue = tracks[i].artist;
+				list_item.setAttributeNode(artist);
+				var title = document.createAttribute("data-title");
+				title.nodeValue = tracks[i].title;
+				list_item.setAttributeNode(title);
+			
+
+				list_item.appendChild(document.createTextNode(tracks[i].artist + " - " + tracks[i].title));
+				list.appendChild(list_item);
+				count++;
+			}
 			}
 			
 			var listEl = document.getElementById('list');

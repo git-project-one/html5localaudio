@@ -38,20 +38,17 @@
 			if (preg_match("/mp3$/", "$file")){
 				// Analyze file and store returned data in $ThisFileInfo
 				$ThisFileInfo = $getID3->analyze($pathfromroot);
-				getid3_lib::CopyTagsToComments($ThisFileInfo);
-				
+				getid3_lib::CopyTagsToComments($ThisFileInfo);				
 				$artist = $ThisFileInfo['comments_html']['artist'][0];
 				$title = $ThisFileInfo['tags']['id3v2']['title'][0];
-							
-				/* This block is used for handling links that end in .mp3 */
-				//echo "<a href='/player/?dir=$dir&play=$pathfromroot'>$file</a><br />";
-				//if ID3 tags are empty - display file name
-				//if($artist == '' OR $title == '')
-				//	echo "<li data-dir='".$dir."' data-filename='".$file."' data-id= '".$count."' data-artist='".$artist."' data-title='".$title."' data-url='$pathfromroot'>".$file."</a></li>";
-				//else
-				//	echo "<li data-dir='".$dir."' data-filename='".$file."' data-id= '".$count."' data-artist='".$artist."' data-title='".$title."' data-url='$pathfromroot'>".$artist." - ".$title."</a></li>";
 
-				
+				//here we build the JSON string				
+				//if ID3 tags are empty - display file name
+				if($artist == '' OR $title == '')
+						$jsonString = '{"dir": "'.$dir.'", "filename": "'.$file.'", "artist": "Unknown Artist", "album": "'.$album.'","title": "'.$file.'"},';
+				else		
+						$jsonString = '{"dir": "'.$dir.'", "filename": "'.$file.'", "artist": "'.$artist.'", "album": "'.$album.'","title": "'.$title.'"},';
+
 				$jsonString = '{"dir": "'.$dir.'", "filename": "'.$file.'", "artist": "'.$artist.'", "album": "'.$album.'","title": "'.$title.'"},';
 				echo $jsonString;
 				
