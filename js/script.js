@@ -12,6 +12,11 @@ window.addEventListener("load",function(){
 	var mousedown = false;
 	var http = new XMLHttpRequest();
 	var listArray;
+	var tracks;
+	
+	//console.log(document.location.search);
+	
+	
 	
 	
 	prevBtn.addEventListener('click',function(){
@@ -35,7 +40,9 @@ window.addEventListener("load",function(){
 			if(http.readyState == 4 && http.status == 200) {
 				display.style.backgroundImage = "url("+http.responseText+")";
 				player.play();
-			}
+				var data;
+				window.history.pushState(data, mp3, "index.php?"+mp3);
+				}
 		}
 		http.send(params);
 	}
@@ -59,11 +66,22 @@ window.addEventListener("load",function(){
 	   }
 	}
 
+		
+	function findTrackByName(filename){
+		for (var i in tracks.sort(sort_by('filename', false, function(a){return a.toUpperCase()}))){
+			if(tracks[i].filename === filename){
+				return tracks[i];
+				}
+		}
+	}
+	
+	
+	
 	var reviver;
-	getTracks();
+	getTracks('artist');
 	
 	
-	function getTracks(){
+	function getTracks(sortBy){
 	
 	var list = document.createElement("ul");
 	var count = 0;
@@ -73,10 +91,12 @@ window.addEventListener("load",function(){
 	http.onreadystatechange = function() {//Call a function when the state changes.
 		
 			if(http.readyState == 4 && http.status == 200) {
-			var tracks = JSON.parse(http.responseText,reviver);	
+			tracks = JSON.parse(http.responseText,reviver);//,function(){
+				detectRedirect();
+			//});
 
 			//Create list element from JSON object
-			for (var i in tracks.sort(sort_by('artist', false, function(a){return a.toUpperCase()}))){
+			for (var i in tracks.sort(sort_by(sortBy, false, function(a){return a.toUpperCase()}))){
 			if(tracks[i].artist == 0)
 			{}
 			else{
@@ -127,6 +147,37 @@ window.addEventListener("load",function(){
 		var index = Math.floor(Math.random()*listArray.length);
 		playTrack(listArray[index]);
 	}
+	
+	function playTrackObj(obj){
+	
+	post(obj.filename,obj.dir);
+	
+	if(obj.artist == '' || obj.title == '')
+		titleSpan.innerText = obj.filename;
+	else
+		titleSpan.innerText = obj.artist + " - " + obj.title;
+	
+	playBtn.style.backgroundImage = "url(/player/img/pause.png)";
+	setSource(obj.dir + "/" + obj.filename);
+	player.play();
+	
+	}
+	
+	function detectRedirect(){
+	//detect if we are redirected by the url and start playing the track
+			if(document.location.search == '')
+				console.log('index');
+			else{
+				var url = document.location.search;
+				//console.log(url.substring(1,url.length-1));
+				playTrackObj(findTrackByName(url.substring(1,url.length)));
+				}
+	}
+	window.addEventListener("popstate",function(){
+	detectRedirect();
+	
+
+	});
 
 	function playTrack(obj){
 	
