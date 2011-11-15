@@ -7,24 +7,12 @@ window.addEventListener("load",function(){
 	var bar = document.getElementById('bar');
 	var playBtn = document.getElementById('playBtn');
 	var titleSpan = document.getElementById('titleSpan');
-	var list = document.getElementById('list');
 	var currentTrack = 0;
-	var listArray = list.childNodes;
 	var playing = false;
 	var mousedown = false;
 	var http = new XMLHttpRequest();
+	var listArray;
 	
-		function shuffle(){
-		var index = Math.floor(Math.random()*listArray.length);
-		playTrack(listArray[index]);
-	}
-	
-
-	for (i=0;i<listArray.length;i++){
-		listArray[i].addEventListener("click",function(){
-			playTrack(this);
-		});
-	}
 	
 	prevBtn.addEventListener('click',function(){
 		if(parseInt(currentTrack)-1>=0)
@@ -49,11 +37,7 @@ window.addEventListener("load",function(){
 		//multipart/form-data
 	//	http.setRequestHeader("Content-length", params.length);
 	//	http.setRequestHeader("Connection", "close");
-
 		http.onreadystatechange = function() {//Call a function when the state changes.
-		
-		
-		
 			if(http.readyState == 4 && http.status == 200) {
 				
 				//console.log(http.responseText);
@@ -65,12 +49,94 @@ window.addEventListener("load",function(){
 	}
 
 	
+	
+	var sort_by = function(field, reverse, primer){
+
+	   reverse = [1,-1][+!!reverse];
+	   primer  = primer || function(x){return x};
+
+	   return function (a,b) {    
+
+		   a = primer(a[field]);
+		   b = primer(b[field]);
+
+		   return (reverse * 
+				  ((a < b) ? -1 :
+				   (a > b) ? +1 :
+							  0));
+	   }
+	}
+
+	var reviver;
+	getTracks();
+	
+	
+	function getTracks(){
+	
+	var list = document.createElement("ul");
+	var count = 0;
+	list.setAttribute("id","list");
+	
+	http.open("GET","traverse.php",true);
+	http.onreadystatechange = function() {//Call a function when the state changes.
+		
+			if(http.readyState == 4 && http.status == 200) {
+			var tracks = JSON.parse(http.responseText,reviver);	
+			//console.log(tracks.sort(sort_by('artist', false, function(a){return a.toUpperCase()})));
+			
+			for (var i in tracks.sort(sort_by('artist', false, function(a){return a.toUpperCase()}))){
+			var list_item = document.createElement("li");
+		
+			var dir = document.createAttribute("data-dir");
+			dir.nodeValue = tracks[i].dir;
+			list_item.setAttributeNode(dir);
+			var filename = document.createAttribute("data-filename");
+			filename.nodeValue = tracks[i].filename;
+			list_item.setAttributeNode(filename);
+			var id = document.createAttribute("data-id");
+			id.nodeValue = count;
+			list_item.setAttributeNode(id);
+			var artist = document.createAttribute("data-artist");
+			artist.nodeValue = tracks[i].artist;
+			list_item.setAttributeNode(artist);
+			var title = document.createAttribute("data-title");
+			title.nodeValue = tracks[i].title;
+			list_item.setAttributeNode(title);
+		
+
+			list_item.appendChild(document.createTextNode(tracks[i].artist + " - " + tracks[i].title));
+			list.appendChild(list_item);
+			count++;
+			}
+			
+			var listEl = document.getElementById('list');
+			listArray = listEl.childNodes;
+
+
+			for (i=0;i<listArray.length;i++){
+				listArray[i].addEventListener("click",function(){
+					playTrack(this);
+				});
+			}
+			
+			
+			}
+		}
+		http.send();
+	document.getElementById("playlist").appendChild(list);
+
+	}
+
+	function shuffle(){
+		var index = Math.floor(Math.random()*listArray.length);
+		playTrack(listArray[index]);
+	}
+
 	function playTrack(obj){
 	
 	currentTrack = obj.getAttribute("data-id");
 	var title = obj.getAttribute("data-title");
 	var artist = obj.getAttribute("data-artist");
-	var url = obj.getAttribute("data-url");
 	var dir = obj.getAttribute("data-dir");
 	var filename = obj.getAttribute("data-filename");
 	
@@ -81,7 +147,7 @@ window.addEventListener("load",function(){
 	else
 		titleSpan.innerText = artist + " - " + title;
 	
-	setSource(url);
+	setSource(dir+"/"+filename);
 	playBtn.style.backgroundImage = "url(/player/img/pause.png)";
 	//player.play();
 	}
