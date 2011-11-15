@@ -1,5 +1,5 @@
 <?php
-//ini_set('memory_limit', '-1');
+ini_set('memory_limit', '-1');
 
 /* Windows */
 $path_to_lame = 'C:\LAME\lame.exe';
@@ -275,7 +275,9 @@ $path_to_folder = dirname(__FILE__)."\\mp3\\";
 
       if (!file_exists($filename)) {
 	    print "Error: WAV file not generated. Please verify directory write and execute permissions.";
-        exit;
+        echo "Error: WAV file not generated. Please verify directory write and execute permissions.";
+		return "Error: WAV file not generated. Please verify directory write and execute permissions.";
+		exit;
       }
       
       /**

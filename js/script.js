@@ -39,6 +39,7 @@ window.addEventListener("load",function(){
 		http.onreadystatechange = function() {//Call a function when the state changes.
 			if(http.readyState == 4 && http.status == 200) {
 				display.style.backgroundImage = "url("+http.responseText+")";
+				console.log(http.responseText);
 				player.play();
 				var data;
 				window.history.pushState(data, mp3, "index.php?"+mp3);
@@ -166,7 +167,7 @@ window.addEventListener("load",function(){
 	function detectRedirect(){
 	//detect if we are redirected by the url and start playing the track
 			if(document.location.search == '')
-				console.log('index');
+				{}
 			else{
 				var url = document.location.search;
 				//console.log(url.substring(1,url.length-1));
