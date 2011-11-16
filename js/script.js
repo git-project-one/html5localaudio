@@ -80,7 +80,8 @@ window.addEventListener("load",function(){
 	
 	var reviver;
 	getTracks('artist');
-	
+	//getTracks('album');
+	//getTracks('title');
 	
 	function getTracks(sortBy){
 	
