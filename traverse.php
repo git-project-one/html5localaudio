@@ -51,7 +51,7 @@
 				else		
 						$jsonString = '{"dir": "'.$dir.'", "filename": "'.$file.'", "artist": "'.$artist.'", "album": "'.$album.'","title": "'.$title.'"},';
 
-				$jsonString = '{"dir": "'.$dir.'", "filename": "'.$file.'", "artist": "'.$artist.'", "album": "'.$album.'","title": "'.$title.'"},';
+				//$jsonString = '{"dir": "'.$dir.'", "filename": "'.$file.'", "artist": "'.$artist.'", "album": "'.$album.'","title": "'.$title.'"},';
 				echo $jsonString;
 				
 				$array[$count] = "/?dir=$dir&play=$pathfromroot";
