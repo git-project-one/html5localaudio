@@ -110,24 +110,101 @@ cursor:pointer;
 -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
 height:112px;
 position:relative;
-background-position:496px 0px;
-background-repeat:no-repeat;
+
 -webkit-transition: all 200ms linear;
 -moz-transition: all 200ms linear;
 }
 
-.window{
+#window{
 background-image: url("../img/dots.png");
+border-radius:5px;
+background-color:#333;
+/*display:none;*/
+opacity:0;
 height:100%;
 width:996px;
 padding:0;
 position:absolute;
 left:0;
 top:0;
+-webkit-transition: all 200ms linear;
+-moz-transition: all 200ms linear;
 }
-.window div{
+
+
+
+.half{
 position:relative;
 height:100%;
 width:496px;
 float:left;
 }
+
+
+#loading{
+position:relative;
+top:30px;
+left:-32px;
+}
+
+#left{
+border-right:1px solid rgba(173, 58, 211, 0.4);
+}
+
+#facebookG{
+}
+
+.facebook_blockG{
+background-color:#FFFFFF;
+border:1px solid #000000;
+float:left;
+height:46px;
+margin-left:5px;
+width:12px;
+-webkit-animation-name:bounceG;
+-webkit-animation-duration:1.3s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:linear;
+-webkit-transform:scale(0.91);
+-moz-animation-name:bounceG;
+-moz-animation-duration:1.3s;
+-moz-animation-iteration-count:infinite;
+-moz-animation-direction:linear;
+-moz-transform:scale(0.91);
+opacity:0.1}
+
+#blockG_1{
+-webkit-animation-delay:0.39s;
+-moz-animation-delay:0.39s}
+
+#blockG_2{
+-webkit-animation-delay:0.52s;
+-moz-animation-delay:0.52s}
+
+#blockG_3{
+-webkit-animation-delay:0.65s;
+-moz-animation-delay:0.65s}
+
+@-webkit-keyframes bounceG{
+0%{
+-webkit-transform:scale(1.2);
+opacity:1}
+
+100%{
+-webkit-transform:scale(0.7);
+opacity:0.1}
+
+}
+
+@-moz-keyframes bounceG{
+0%{
+-moz-transform:scale(1.2);
+opacity:1}
+
+100%{
+-moz-transform:scale(0.7);
+opacity:0.1}
+
+}
+
+

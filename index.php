@@ -21,11 +21,24 @@
 				</div>
 			</div>
 						<div id="display">
-				<div class="container window">
-						<div style="border-right:1px solid rgba(173, 58, 211, 0.4)"></div>
-						<div></div>
-				</div>		
-			</div>
+							<div class="container window" style="position:absolute;width: 100%;height: 100%;">
+								<div class="half" id="left"></div>
+								<div class="half"></div>
+							</div>
+							<div class="container window" id="window">
+									<div class="half"></div>
+										<div id="loading">
+										
+										<div id="block_1" class="facebook_blockG">
+										</div>
+										<div id="blockG_2" class="facebook_blockG">
+										</div>
+										<div id="blockG_3" class="facebook_blockG">
+										</div>
+										</div>
+									<div class="half"></div>
+							</div>		
+						</div>
 			
 			
 			

@@ -1,4 +1,6 @@
 window.addEventListener("load",function(){
+var loadingAnimation = document.getElementById('loading');
+var DisplayWindow = document.getElementById('window');
 	var player = document.getElementById('player');
 	var display = document.getElementById('display');
 	var handle = document.getElementById('handle');
@@ -13,10 +15,22 @@ window.addEventListener("load",function(){
 	var http = new XMLHttpRequest();
 	var listArray;
 	var tracks;
+	var mode = false;
 	
 	//console.log(document.location.search);
 	
 	
+	function loading(mode){
+	if(mode == true){
+		//DisplayWindow.style.display = "block";
+		DisplayWindow.style.opacity = "1";
+		display.style.backgroundPosition = "496px 0px";
+		}
+	else
+//		DisplayWindow.style.display = "none";
+		DisplayWindow.style.opacity = "0";
+
+	}
 	
 	
 	prevBtn.addEventListener('click',function(){
@@ -35,12 +49,20 @@ window.addEventListener("load",function(){
 		var url = "convert.php";
 		var params = "mp3=" + mp3 + "&dirname=mp3&width=30000&height=110&foreground=#AAAAAA&background=";
 		http.open("POST", url, true);
+
 		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		http.onreadystatechange = function() {//Call a function when the state changes.
-			if(http.readyState == 4 && http.status == 200) {
-				display.style.backgroundImage = "url("+http.responseText+")";
+		if(http.readyState == 1 || http.readyState == 3){
+		
+		loading(true);
+		}
+			else if(http.readyState == 4 && http.status == 200) {
+				//display.style.backgroundImage = "url("+http.responseText+"), url(img/dots.png)";
+				display.style.background = "url("+http.responseText+") 496px 0px no-repeat, url(img/dots.png) 0px 0px, #eee";
+
 				console.log(http.responseText);
 				player.play();
+				loading(false);
 				var data;
 				window.history.pushState(data, mp3, "index.php?"+mp3);
 				}
@@ -227,6 +249,7 @@ window.addEventListener("load",function(){
 		playing=true;
 //		titleSpan.innerText = this.getAttribute("alt");
 		totalTimeSpan.innerText = secondsToTime(player.duration).m + ":" + secondsToTime(player.duration).s;
+		
 	});
 	
 	playBtn.addEventListener('click',function(){
