@@ -181,7 +181,7 @@ var DisplayWindow = document.getElementById('window');
 	else
 		titleSpan.innerText = obj.artist + " - " + obj.title;
 	
-	playBtn.style.backgroundImage = "url(/player/img/pause.png)";
+	playBtn.style.backgroundImage = "url(img/pause.png)";
 	setSource(obj.dir + "/" + obj.filename);
 	player.play();
 	
@@ -219,7 +219,7 @@ var DisplayWindow = document.getElementById('window');
 		titleSpan.innerText = artist + " - " + title;
 	
 	setSource(dir+"/"+filename);
-	playBtn.style.backgroundImage = "url(/player/img/pause.png)";
+	playBtn.style.backgroundImage = "url(img/pause.png)";
 	//player.play();
 	}
 
@@ -256,12 +256,12 @@ var DisplayWindow = document.getElementById('window');
 		if(playing){
 			player.pause();
 			playing = false;
-			this.style.backgroundImage = "url(/player/img/play.png)";
+			this.style.backgroundImage = "url(img/play.png)";
 			}
 		else{
 			player.play();
 			playing = true;
-			this.style.backgroundImage = "url(/player/img/pause.png)";
+			this.style.backgroundImage = "url(img/pause.png)";
 		}
 	});
 	
